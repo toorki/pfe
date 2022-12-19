@@ -20,7 +20,7 @@ var addNewImage = async(req, res)=>{
         var newImage= new images(data)
         await newImage.save()
         await users.findByIdAndUpdate(req.body.id, {$push:{listOfImages:newImage}})
-        return res.json({message:'image uploaded successfully',newImage})
+        return res.json({message:'file uploaded successfully',newImage})
     } catch (error) {
         return res.json({message:error})
     }
@@ -31,7 +31,7 @@ var getImages = async(req,res)=>{
 
     try {
         var allImages= await images.find()
-  return res.json({message:'all images uploaded', allImages})
+  return res.json({message:'all the files', allImages})
     } catch (error) {
         return res.json({message:error})
     }
@@ -40,7 +40,7 @@ var getImages = async(req,res)=>{
 var getImage= async(req,res)=>{
     try {
         var theImage=await images.findById(req.params.id)
-        return res.json({message:'the image you seek', theImage})
+        return res.json({message:'the file you seek', theImage})
     } catch (error) {
         return res.json({message:error})
     }
@@ -49,7 +49,7 @@ var getImage= async(req,res)=>{
 var updateImage=async(req,res)=>{
     try {
         var theImage=await images.findByIdAndUpdate(req.params.id,{$set:{...req.body}},{new:true})
-        return res.json({message:'the image updated seccessfully', theImage})
+        return res.json({message:'the file updated seccessfully', theImage})
     } catch (error) {
         return res.json({message:error})
     }
@@ -58,7 +58,7 @@ var updateImage=async(req,res)=>{
 var deleteImage=async(req,res)=>{
     try {
         await images.findByIdAndDelete(req.params.id)
-        return res.json({message:'the image deleted seccessfully'})
+        return res.json({message:'the file deleted seccessfully'})
     } catch (error) {
         return res.json({message:error})
     }

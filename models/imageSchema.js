@@ -6,9 +6,10 @@ const {Schema}=mongoose
         description: String,
     
             files: [{type: String}],
+            files1:[{type: String}],
             
         userId:[{type:Schema.Types.ObjectId, ref:'users'}],
     });
-     
+    
      
     module.exports = mongoose.model('Image', imageSchema);

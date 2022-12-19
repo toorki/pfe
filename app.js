@@ -13,7 +13,7 @@ var path = require('path');
 require('dotenv/config');
 
 
-
+app.use('/public', express.static('./public'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
  
@@ -42,17 +42,17 @@ app.use('/userAPI',require('./Routes/userRouter'))
 var imgModel = require('./models/imageSchema');
 var connectDB = require('./config/connectDB');
 connectDB()
-app.get('/', (_req, res) => {
-    imgModel.find({}, (err, items) => {
-        if (err) {
-            console.log(err);
-            res.status(500).send('An error occurred', err);
-        }
-        else {
-            res.render('imagesPage', { items: items });
-        }
-    });
-});
+//app.get('/', (_req, res) => {
+   // imgModel.find({}, (err, items) => {
+        //if (err) {
+       //     console.log(err);
+          //  res.status(500).send('An error occurred', err);
+        //}
+        //else {
+          //  res.render('imagesPage', { items: items });
+       // }
+    //});
+//});
 
 app.post('/', (req, res, next) => {
  
@@ -75,7 +75,7 @@ app.post('/', (req, res, next) => {
     });
 });
 
-var port = process.env.PORT || '6000'
+var port = process.env.PORT || '8000'
 app.listen(port, err => {
     if (err)
         throw err

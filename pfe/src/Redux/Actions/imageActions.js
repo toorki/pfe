@@ -6,11 +6,10 @@ import axios from "axios"
 export const getImages=()=>async(dispatch)=>{
     try {
         dispatch({type:GET_IMAGES_REQUEST})
-        const {data} = await axios.get('http://localhost:6000/imageAPI/getImages')
+        const {data} = await axios.get('http://localhost:8000/imageAPI/getImages')
         console.log(data)
         dispatch({type:GET_IMAGES_SUCCESS, payload:data})
     } catch (error) {
         dispatch({type:GET_IMAGES_FAIL})
     }
-
 }
