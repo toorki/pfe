@@ -1,15 +1,24 @@
-import React from "react"
+import React, { useState } from "react"
 import Header from "../components/Header"
+import { useDispatch, useSelector } from "react-redux"
 import {MDBBtn,MDBContainer,MDBRow,MDBCol,MDBCard,MDBCardBody,MDBInput,MDBCheckbox,MDBIcon}from 'mdb-react-ui-kit';
+import { addNewUser } from "../Redux/Actions/userActions";
+import Alert from 'react-bootstrap/Alert';
 
 
 
 function Signup(){
+  const [cred, setCred] = useState({})
+  const dispatch = useDispatch()
+  const handlSignUp=()=>{
+    dispatch(addNewUser(cred))
+  }
+    const {loading,message, error} = useSelector (state => state.addNewUser)
     return(
         <>
         <Header/>
-
-
+      {loading && "loading"}
+      
     <MDBContainer fluid className='p-4 background-radial-gradient overflow-hidden'>
 
       <MDBRow>
@@ -40,26 +49,29 @@ function Signup(){
 
               <MDBRow>
                 <MDBCol col='6'>
-                  <MDBInput wrapperClass='mb-4' label='First name' id='form1' type='text'/>
+                  <MDBInput wrapperClass='mb-4' label='full name' id='form1' type='text'
+                   onChange={(e)=>setCred({...cred,fullName:e.target.value})} />
                 </MDBCol>
 
-                <MDBCol col='6'>
-                  <MDBInput wrapperClass='mb-4' label='Last name' id='form2' type='text'/>
-                </MDBCol>
+               
               </MDBRow>
 
-              <MDBInput wrapperClass='mb-4' label='Email' id='form3' type='email'/>
-              <MDBInput wrapperClass='mb-4' label='Password' id='form4' type='password'/>
+              <MDBInput wrapperClass='mb-4' label='Email' id='form3' type='email' 
+              onChange={(e)=>setCred({...cred,email:e.target.value})}/>
+              <MDBInput wrapperClass='mb-4' label='Password' id='form4' type='password' 
+              onChange={(e)=>setCred({...cred,password:e.target.value})}/>
 
               <div className='d-flex justify-content-center mb-4'>
                 <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Subscribe to our newsletter' />
               </div>
 
-              <MDBBtn className='w-100 mb-4' size='md'>sign up</MDBBtn>
+              <MDBBtn className='w-100 mb-4' size='md' onClick={handlSignUp}>sign up</MDBBtn>
 
               <div className="text-center">
-
-                <p>or sign up with:</p>
+              {['sucess',].map((variant) => (message &&
+                <Alert key={variant} variant={variant}>
+                    {message.message} </Alert>))}
+              
 
                 <MDBBtn tag='a' color='none' className='mx-3' style={{ color: '#1266f1' }}>
                   <MDBIcon fab icon='facebook-f' size="sm"/>
@@ -87,6 +99,9 @@ function Signup(){
       </MDBRow>
 
     </MDBContainer>
+    {['danger',].map((variant) => (error &&
+                <Alert key={variant} variant={variant}>
+                    {error} </Alert>))}
         </>
     )
 }

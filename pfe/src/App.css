@@ -127,3 +127,9 @@
       .fa-spinner {
           font-size: 1.2em;
       }
+
+.upld{
+  display: flex;
+  flex-direction: row;
+  
+}

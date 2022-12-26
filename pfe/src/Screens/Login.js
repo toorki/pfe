@@ -1,10 +1,25 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import Header from "../components/Header"
 import {MDBBtn,MDBContainer,MDBRow,MDBCol,MDBCard,MDBCardBody,MDBInput,MDBCheckbox,MDBIcon}from 'mdb-react-ui-kit';
-
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../Redux/Actions/userActions";
+import Alert from 'react-bootstrap/Alert';
+import { useNavigate } from 'react-router';
 
 
 function Login(){
+  let navigate = useNavigate();
+  const [cred, setCred] = useState({})
+  const dispatch = useDispatch()
+  const handleSignIn=()=>{
+    dispatch(login(cred))
+  }
+  const {message, error, user} = useSelector (state => state.loginDetales)
+ useEffect(() => {
+        if (user){
+          navigate(`/profile/${user.userId}`)
+        }
+  },[user])
     return(
         <>
         <Header/>
@@ -38,18 +53,22 @@ function Login(){
 
     
 
-        <MDBInput wrapperClass='mb-4' label='Email' id='form3' type='email'/>
-        <MDBInput wrapperClass='mb-4' label='Password' id='form4' type='password'/>
+        <MDBInput wrapperClass='mb-4' label='Email' id='form3' type='email'
+        onChange={(e)=>setCred({...cred,email:e.target.value})}/>
+        <MDBInput wrapperClass='mb-4' label='Password' id='form4' type='password'
+        onChange={(e)=>setCred({...cred,password:e.target.value})}/>
 
         <div className='d-flex justify-content-center mb-4'>
           <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Subscribe to our newsletter' />
         </div>
 
-        <MDBBtn className='w-100 mb-4' size='md'>sign up</MDBBtn>
+        <MDBBtn className='w-100 mb-4' size='md'onClick={handleSignIn}>Sign In</MDBBtn>
 
         <div className="text-center">
 
-          <p>or sign up with:</p>
+        {['sucess',].map((variant) => (message &&
+                <Alert key={variant} variant={variant}>
+                    {message.message} </Alert>))}
 
           <MDBBtn tag='a' color='none' className='mx-3' style={{ color: '#1266f1' }}>
             <MDBIcon fab icon='facebook-f' size="sm"/>
@@ -77,6 +96,7 @@ function Login(){
 </MDBRow>
 
 </MDBContainer>
+
         </>
     )
 }

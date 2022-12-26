@@ -1,10 +1,8 @@
 import React, {useEffect } from "react";
 import Header from "../components/Header";
 import { useDispatch, useSelector } from "react-redux";
-import FileUpload from './FileUpload'
 //import App from "../App";
 //import { Express } from "express";
-import FileList from "./FileList";
 import { getImages } from "../Redux/Actions/imageActions";
 //import Button from 'react-bootstrap/Button';
 //import Form from 'react-bootstrap/Form';
@@ -44,9 +42,6 @@ function Home(){
 return(
     <>
     <Header/>
-    <FileUpload/>
-      {loading && "loading"}
-      
     </>
 )
 }

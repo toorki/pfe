@@ -5,7 +5,8 @@ var userSchema= new Schema({
     fullName:String,
     email:String,
     password:String,
-    //listOfImages:[{type:Schema.type.ObjectId, ref:'images'}]
+    role:{type: Number, default:0},
+    listOfFiles:{type: Schema.Types.ObjectId, ref:'Image'}
 })
 
 module.exports = mongoose.model('users', userSchema);

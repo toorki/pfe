@@ -72,7 +72,7 @@ var storage = multer.diskStorage({
     },
  });
   
-    uploadFiles= multer({
+ var uploadFiles= multer({
     storage: storage,
     //limits: { fileSize: "10000" },
     fileFilter: (req, file, cb) => {
